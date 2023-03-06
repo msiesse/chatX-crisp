@@ -1,6 +1,10 @@
 <template>
   <div>
     <h1>{{ roomName }}</h1>
+    <h2>Connected Users:</h2>
+    <ul>
+      <li v-for="user in Object.values(state.connectedUsers)" :key="user.id">{{ user.id }}</li>
+    </ul>
     <ul>
       <li v-for="message in state.messages" :key="message.id">
         {{ message.username }}: {{ message.content }}
@@ -13,8 +17,9 @@
   </div>
 </template>
 
+
 <script>
-import {ref, reactive} from 'vue'
+import {ref, reactive, onBeforeUnmount} from 'vue'
 import {useRoute} from 'vue-router'
 import {useSocketStore} from "../store/socket/useSocket.js";
 import {storeToRefs} from "pinia";
@@ -27,6 +32,7 @@ export default {
     const state = reactive({
       messages: [],
       newMessage: '',
+      connectedUsers: {}
     })
 
     socketClient.value.on('connect', () => {
@@ -37,8 +43,13 @@ export default {
       state.messages.push(message)
     })
 
-    socketClient.value.on('new-messages', (messages) => {
+    socketClient.value.on('room-joined', (messages, connectedUsers) => {
       state.messages = messages
+      state.connectedUsers = connectedUsers
+    })
+
+    socketClient.value.on('user-connected', (userId) => {
+      state.connectedUsers[userId] = userId
     })
 
     // TODO Could abstract socketClient with an interface
@@ -47,7 +58,7 @@ export default {
         roomName: roomName.value,
         message: {
           id: Date.now(),
-          username: 'User',
+          username: socketClient.value.id,
           content: state.newMessage,
         },
       })
@@ -60,5 +71,7 @@ export default {
       sendMessage,
     }
   },
+
+
 }
 </script>

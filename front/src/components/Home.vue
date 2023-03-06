@@ -19,7 +19,7 @@ export default {
     const roomName = ref('')
 
     const createRoom = () => {
-      socketClient.value.emit('create-room', roomName.value)
+      socketClient.value.emit('join-room', roomName.value)
       router.push(`/chat/${roomName.value}`);
     }
 

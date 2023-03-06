@@ -5,12 +5,13 @@ export class CreateChatRoomUsecase {
         this.chatRoomRepository = chatRoomRepository
     }
 
-    exec(name) {
+    exec(name, user) {
         let chatRoom = this.chatRoomRepository.find({ name })
         if (!chatRoom) {
-            chatRoom = new ChatRoom(name,[])
-            this.chatRoomRepository.save(chatRoom)
+            chatRoom = new ChatRoom(name,[], {})
         }
+        chatRoom.users[user.id] = user
+        this.chatRoomRepository.save(chatRoom)
         return chatRoom
     }
 }
