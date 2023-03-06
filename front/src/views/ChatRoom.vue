@@ -30,17 +30,19 @@ export default {
     })
 
     socketClient.value.on('connect', () => {
-      console.log('Connected to server')
       socketClient.value.emit('join-room', roomName.value)
     })
 
     socketClient.value.on('new-message', (message) => {
-      console.log("oh")
       state.messages.push(message)
     })
 
+    socketClient.value.on('new-messages', (messages) => {
+      state.messages = messages
+    })
+
+    // TODO Could abstract socketClient with an interface
     const sendMessage = () => {
-      console.log("ha")
       socketClient.value.emit('send-message', {
         roomName: roomName.value,
         message: {
