@@ -3,14 +3,14 @@ import ChatRoom from '../views/ChatRoom.vue';
 import Home from "../views/ChatRoomCreation.vue";
 import Signup from "../views/Signup.vue";
 import axios from "axios";
-import Signin from "../views/Signin.vue";
+import Login from "../views/Login.vue";
 
 export const createRouterInstance = () => {
     const routes = [
         {path: '/chatRoom', component: Home, meta: {requiresAuth: true}},
         {path: '/chat/:roomName', component: ChatRoom, meta: {requiresAuth: true}},
         {path: '/signup', component: Signup},
-        {path: '/signin', component: Signin}
+        {path: '/login', component: Login}
     ];
 
     const router = createRouter({
@@ -25,7 +25,7 @@ export const createRouterInstance = () => {
         const token = localStorage.getItem('token') || ''
         if (to.meta.requiresAuth) {
             if (!token) {
-                next('/signin');
+                next('/login');
             } else {
                 try {
                     await axios.post('/auth/validate');
@@ -42,7 +42,7 @@ export const createRouterInstance = () => {
 
     router.beforeEach(async(to, from, next) => {
         const token = localStorage.getItem('token') || ''
-        if (token !== '' && (to.path === '/signin' || to.path ==='/signup')) {
+        if (token !== '' && (to.path === '/login' || to.path ==='/signup')) {
             next('/chatRoom')
         } else {
             next()

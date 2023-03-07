@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{ roomName }}</h1>
-    <h2>Connected Users:</h2>
+    <h2>Users:</h2>
     <ul>
       <li v-for="user in Object.values(users)" :key="user.username">{{ user.username }}</li>
     </ul>

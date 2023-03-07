@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Signin</h1>
+    <h1>Login</h1>
     <form @submit.prevent="signinUI">
       <label>
         Username:
@@ -10,7 +10,7 @@
         Password:
         <input type="password" v-model="password" required>
       </label>
-      <button type="submit">Signin</button>
+      <button type="submit">Login</button>
     </form>
     <div v-if="error" style="color: red;">{{ error }}</div>
   </div>
@@ -22,7 +22,7 @@ import {useAuthStore} from "../store/useAuthStore.js";
 import {useRouter} from "vue-router";
 
 export default {
-  name: 'Signin',
+  name: 'Login',
   setup() {
     const username = ref('');
     const password = ref('');
