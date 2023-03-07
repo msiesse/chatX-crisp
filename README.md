@@ -19,6 +19,7 @@ Run `npm run dev` in the Front and Back folders to launch the application.
 The Front folder contains the frontend code of the application. It is organized into the following subfolders:
 
 ```
+components: Components that can be reused on different views
 httpClients: contains the API client for making HTTP requests to the backend.
 router: contains the Vue router configuration.
 store: contains the files for the Pinia store used for managing the application state.
