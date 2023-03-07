@@ -50,7 +50,7 @@ export const createRouterInstance = () => {
     })
 
     router.beforeEach(async(to, from, next) => {
-        const regex = /^\/chat\/.*$/;
+        const regex = /^\/chat\/.+$/;
         if (routes.some(route => (route.path === to.path || regex.test(to.path)))) {
             next()
         } else {
