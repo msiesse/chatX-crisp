@@ -18,41 +18,28 @@
 </template>
 
 
-<script>
+<script setup>
 import {ref} from 'vue'
 import {useRoute} from 'vue-router'
 import {useSocketStore} from "../store/useSocketStore.js";
 import {storeToRefs} from "pinia";
 import {useChatRoomStore} from "../store/useChatRoomStore.js";
 
-export default {
-  setup() {
-    const route = useRoute()
-    const {socketClient} = storeToRefs(useSocketStore())
-    const chatRoomStore = useChatRoomStore()
-    const {sendMessage} = chatRoomStore
-    const {users, messages} = storeToRefs(chatRoomStore)
-    const roomName = ref(route.params.roomName)
-    const newMessage = ref('')
+const route = useRoute()
+const {socketClient} = storeToRefs(useSocketStore())
+const chatRoomStore = useChatRoomStore()
+const {sendMessage} = chatRoomStore
+const {users, messages} = storeToRefs(chatRoomStore)
+const roomName = ref(route.params.roomName)
+const newMessage = ref('')
 
-    socketClient.value.on('connect', () => {
-      socketClient.value.emit('join-room', roomName.value)
-    })
+socketClient.value.on('connect', () => {
+  socketClient.value.emit('join-room', roomName.value)
+})
 
-    const sendMessageView = () => {
-      sendMessage(roomName.value, newMessage.value)
-      newMessage.value = ''
-    }
-
-    return {
-      roomName,
-      users,
-      messages,
-      sendMessageView,
-      newMessage
-    }
-  },
-
-
+const sendMessageView = () => {
+  sendMessage(roomName.value, newMessage.value)
+  newMessage.value = ''
 }
+
 </script>

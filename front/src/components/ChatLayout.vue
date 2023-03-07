@@ -12,9 +12,11 @@
                        alt="Crisp"/>
                 </div>
               </div>
-              <button type="button" class="-mr-3 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900" @click="showUsers = !showUsers">
+              <button type="button"
+                      class="-mr-3 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900"
+                      @click="showUsers = !showUsers">
                 <span class="sr-only">Open sidebar</span>
-                <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+                <Bars3Icon class="h-6 w-6" aria-hidden="true"/>
               </button>
             </div>
           </div>
@@ -55,7 +57,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import {Disclosure} from "@headlessui/vue"
 import {Bars3Icon,} from '@heroicons/vue/24/outline'
 import {ref} from 'vue'
@@ -66,52 +68,29 @@ import {useChatRoomStore} from "../store/useChatRoomStore.js";
 import {useAuthStore} from "../store/useAuthStore.js";
 import SlidePanel from "./SlidePanel.vue";
 
-export default {
-  components: {
-    SlidePanel,
-    Disclosure,
-    Bars3Icon
-  },
+const route = useRoute()
+const {socketClient} = storeToRefs(useSocketStore())
+const chatRoomStore = useChatRoomStore()
+const {sendMessage} = chatRoomStore
+const {username} = useAuthStore()
+const {users, messages} = storeToRefs(chatRoomStore)
+const roomName = ref(route.params.roomName)
+const newMessage = ref('')
+const showUsers = ref(true)
 
-  setup() {
-    const route = useRoute()
-    const {socketClient} = storeToRefs(useSocketStore())
-    const chatRoomStore = useChatRoomStore()
-    const {sendMessage} = chatRoomStore
-    const {username} = useAuthStore()
-    const {users, messages} = storeToRefs(chatRoomStore)
-    const roomName = ref(route.params.roomName)
-    const newMessage = ref('')
-    const showUsers = ref(true)
+socketClient.value.on('connect', () => {
+  socketClient.value.emit('join-room', roomName.value)
+})
 
-    socketClient.value.on('connect', () => {
-      socketClient.value.emit('join-room', roomName.value)
-    })
+const sendMessageView = () => {
+  sendMessage(roomName.value, newMessage.value)
+  newMessage.value = ''
+}
 
-    const sendMessageView = () => {
-      sendMessage(roomName.value, newMessage.value)
-      newMessage.value = ''
-    }
-
-    const getClassRecipient = (message) => {
-      if (message.username !== username) {
-        return "mx-4 self-start"
-      }
-      return "mx-4 self-end"
-    }
-
-    return {
-      roomName,
-      users,
-      username,
-      messages,
-      sendMessageView,
-      newMessage,
-      getClassRecipient,
-      showUsers
-    }
-  },
-
-
+const getClassRecipient = (message) => {
+  if (message.username !== username) {
+    return "mx-4 self-start"
+  }
+  return "mx-4 self-end"
 }
 </script>

@@ -6,26 +6,20 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import {ref} from 'vue'
 import {useRouter} from "vue-router"
 import {storeToRefs} from "pinia";
 import {useSocketStore} from "../store/useSocketStore.js";
 import {useChatRoomStore} from "../store/useChatRoomStore.js";
 
-export default {
-  setup() {
-    const router = useRouter();
-    const {socketClient} = storeToRefs(useSocketStore())
-    useChatRoomStore()
-    const roomName = ref('')
+const router = useRouter();
+const {socketClient} = storeToRefs(useSocketStore())
+useChatRoomStore()
+const roomName = ref('')
 
-    const createRoom = () => {
-      socketClient.value.emit('join-room', roomName.value)
-      router.push(`/chat/${roomName.value}`);
-    }
-
-    return {roomName, createRoom}
-  }
+const createRoom = () => {
+  socketClient.value.emit('join-room', roomName.value)
+  router.push(`/chat/${roomName.value}`);
 }
 </script>

@@ -16,36 +16,24 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import {ref} from 'vue';
 import {useAuthStore} from "../store/useAuthStore.js";
 import {useRouter} from "vue-router";
 
-export default {
-  name: 'Login',
-  setup() {
-    const username = ref('');
-    const password = ref('');
-    const error = ref('');
-    const { signin } = useAuthStore()
-    const router = useRouter()
+const username = ref('');
+const password = ref('');
+const error = ref('');
+const {signin} = useAuthStore()
+const router = useRouter()
 
-    const signinUI = async() => {
-      try {
-        await signin(username.value, password.value)
-        await router.push("/chatRoom")
-      } catch (e) {
-        if (e.response?.data?.message) error.value = e.response.data.message
-        else error.value = e
-      }
-    }
-
-    return {
-      username,
-      password,
-      error,
-      signinUI
-    };
-  },
-};
+const signinUI = async () => {
+  try {
+    await signin(username.value, password.value)
+    await router.push("/chatRoom")
+  } catch (e) {
+    if (e.response?.data?.message) error.value = e.response.data.message
+    else error.value = e
+  }
+}
 </script>
