@@ -55,6 +55,7 @@ This is a basic web chat application that only work locally, there are many thin
 - Keep track of when users are connected or not
 - Using typescript instead of javascript to have a better view on interfaces
 - adding a moderation filter when someone send a message
+- Deploy the frontend and the backend on a server
 
 ## Contributors
 
