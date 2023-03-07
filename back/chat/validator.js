@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const sendMessageSchema = Joi.object({
+export const sendMessageSchema = Joi.object({
     roomName: Joi.string().required(),
     message: Joi.object({
         id: Joi.number().required(),
@@ -9,11 +9,14 @@ const sendMessageSchema = Joi.object({
     }).required(),
 });
 
-export const validateSendMessage = (roomName, message) => {
-    const params = {roomName, message};
-    const {error} = sendMessageSchema.validate(params);
+export const joinRoomSchema = Joi.object({
+    roomName: Joi.string().required(),
+})
+
+export const validate = (schema, params) => {
+    const {error} = schema.validate(params);
 
     if (error) {
         throw new Error(error.details[0].message);
     }
-};
+}

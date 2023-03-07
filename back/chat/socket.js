@@ -3,7 +3,7 @@ import {SendMessageUsecase} from "./sendMessage.js";
 import {createChatterFromToken} from "./chatter.js";
 import {io} from "../config/configApp.js";
 import {getChatRoomRepository} from "./dependencies/chatRoomRepository.js";
-import {validateSendMessage} from "./validator.js";
+import {joinRoomSchema, sendMessageSchema, validate} from "./validator.js";
 
 
 const chatRoomRepository = getChatRoomRepository()
@@ -20,6 +20,7 @@ io.on('connection', (socket) => {
 
     socket.on('join-room', (roomName) => {
         try {
+            validate(joinRoomSchema, {roomName})
             initChatRoom(roomName);
             socket.broadcast.to(roomName).emit('user-connected', createChatterFromToken(socket.decoded_token));
         } catch (error) {
@@ -29,7 +30,7 @@ io.on('connection', (socket) => {
 
     socket.on('send-message', ({roomName, message}) => {
         try {
-            validateSendMessage(roomName, message)
+            validate(sendMessageSchema, {roomName, message})
             sendMessageUsecase.exec(roomName, message)
             io.to(roomName).emit('new-message', message);
         } catch (error) {
