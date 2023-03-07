@@ -1,4 +1,4 @@
-import {getUserRepository} from "../dependencies/repositories/userRepository.js";
+import {getUserRepository} from "./dependencies/repositories/userRepository.js";
 import jwt from "jsonwebtoken";
 
 const userRepository = getUserRepository()

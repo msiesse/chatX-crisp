@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import express from "express";
 import bcrypt from 'bcrypt';
-import {User} from "../authentication/user.js";
+import {User} from "../user.js";
 import {getUserRepository} from "../dependencies/repositories/userRepository.js";
-import {authMiddleware} from "../authentication/authMiddleware.js";
+import {authMiddleware} from "../authMiddleware.js";
 
 export const routerAuthentication = express.Router();
 

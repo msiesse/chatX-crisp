@@ -1,4 +1,4 @@
-import {InMemoryUserRepository} from "../../authentication/userRepository.js";
+import {InMemoryUserRepository} from "../../userRepository.js";
 
 let userRepository = null
 

@@ -1,5 +1,3 @@
-import {User} from "../authentication/user.js";
-
 export class Chatter {
     constructor(username) {
         this.username = username
