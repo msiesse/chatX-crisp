@@ -18,13 +18,21 @@ io.on('connection', (socket) => {
     }
 
     socket.on('join-room', (roomName) => {
-        initChatRoom(roomName);
-        socket.broadcast.to(roomName).emit('user-connected', createChatterFromToken(socket.decoded_token));
+        try {
+            initChatRoom(roomName);
+            socket.broadcast.to(roomName).emit('user-connected', createChatterFromToken(socket.decoded_token));
+        } catch (error) {
+            socket.emit('error', error)
+        }
     })
 
     socket.on('send-message', ({roomName, message}) => {
-        sendMessageUsecase.exec(roomName, message)
-        io.to(roomName).emit('new-message', message);
+        try {
+            sendMessageUsecase.exec(roomName, message)
+            io.to(roomName).emit('new-message', message);
+        } catch (error) {
+            socket.emit('error', error)
+        }
     });
 
     socket.on('disconnect', () => {

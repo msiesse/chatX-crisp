@@ -42,7 +42,6 @@ export const createRouterInstance = () => {
 
     router.beforeEach(async(to, from, next) => {
         const token = localStorage.getItem('token') || ''
-        console.log(to.path)
         if (token !== '' && (to.path === '/signin' || to.path ==='/signup')) {
             next('/chatRoom')
         } else {
