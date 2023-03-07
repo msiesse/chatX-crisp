@@ -57,6 +57,7 @@ This is a basic web chat application that only work locally, there are many thin
 - Using typescript instead of javascript to have a better view on interfaces
 - adding a moderation filter when someone send a message
 - Deploy the frontend and the backend on a server
+- Better validation from the backend side to avoid security issues
 - Better components for reusability later (less duplication)
 
 ## Contributors
