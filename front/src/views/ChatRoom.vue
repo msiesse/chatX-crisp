@@ -3,15 +3,15 @@
     <h1>{{ roomName }}</h1>
     <h2>Connected Users:</h2>
     <ul>
-      <li v-for="user in Object.values(state.connectedUsers)" :key="user.id">{{ user.id }}</li>
+      <li v-for="user in Object.values(users)" :key="user.username">{{ user.username }}</li>
     </ul>
     <ul>
-      <li v-for="message in state.messages" :key="message.id">
+      <li v-for="message in messages" :key="message.id">
         {{ message.username }}: {{ message.content }}
       </li>
     </ul>
-    <form @submit.prevent="sendMessage">
-      <input v-model="state.newMessage"/>
+    <form @submit.prevent="sendMessageView">
+      <input v-model="newMessage"/>
       <button>Send</button>
     </form>
   </div>
@@ -23,52 +23,36 @@ import {ref, reactive, onBeforeUnmount} from 'vue'
 import {useRoute} from 'vue-router'
 import {useSocketStore} from "../store/socket/useSocket.js";
 import {storeToRefs} from "pinia";
+import {useAuthStore} from "../store/useAuthStore.js";
+import {useChatRoomStore} from "../store/useChatRoomStore.js";
 
 export default {
   setup() {
     const route = useRoute()
+    const {connect} = useSocketStore()
     const {socketClient} = storeToRefs(useSocketStore())
+    connect("http://localhost:3000")
+    const chatRoomStore = useChatRoomStore()
+    const {sendMessage} = chatRoomStore
+    const {users, messages} = storeToRefs(chatRoomStore)
     const roomName = ref(route.params.roomName)
-    const state = reactive({
-      messages: [],
-      newMessage: '',
-      connectedUsers: {}
-    })
+    const newMessage = ref('')
 
     socketClient.value.on('connect', () => {
       socketClient.value.emit('join-room', roomName.value)
     })
 
-    socketClient.value.on('new-message', (message) => {
-      state.messages.push(message)
-    })
-
-    socketClient.value.on('room-joined', (messages, connectedUsers) => {
-      state.messages = messages
-      state.connectedUsers = connectedUsers
-    })
-
-    socketClient.value.on('user-connected', (userId) => {
-      state.connectedUsers[userId] = userId
-    })
-
-    // TODO Could abstract socketClient with an interface
-    const sendMessage = () => {
-      socketClient.value.emit('send-message', {
-        roomName: roomName.value,
-        message: {
-          id: Date.now(),
-          username: socketClient.value.id,
-          content: state.newMessage,
-        },
-      })
-      state.newMessage = ''
+    const sendMessageView = () => {
+      sendMessage(roomName.value, newMessage.value)
+      newMessage.value = ''
     }
 
     return {
       roomName,
-      state,
-      sendMessage,
+      users,
+      messages,
+      sendMessageView,
+      newMessage
     }
   },
 

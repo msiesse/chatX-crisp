@@ -10,7 +10,7 @@ export class CreateChatRoomUsecase {
         if (!chatRoom) {
             chatRoom = new ChatRoom(name,[], {})
         }
-        chatRoom.users[user.id] = user
+        chatRoom.users[user.username] = user
         this.chatRoomRepository.save(chatRoom)
         return chatRoom
     }

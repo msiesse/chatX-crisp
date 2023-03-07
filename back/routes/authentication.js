@@ -1,12 +1,13 @@
 import jwt from "jsonwebtoken";
 import express from "express";
 import bcrypt from 'bcrypt';
-import {InMemoryUserRepository} from "../authentication/userRepository.js";
 import {User} from "../authentication/user.js";
+import {getUserRepository} from "../dependencies/repositories/userRepository.js";
+import {authMiddleware} from "../authentication/authMiddleware.js";
 
 export const routerAuthentication = express.Router();
 
-const userRepository = new InMemoryUserRepository()
+const userRepository = getUserRepository()
 
 routerAuthentication.post('/signup', (req, res) => {
     const {username, password} = req.body;
@@ -32,7 +33,11 @@ routerAuthentication.post('/signin', (req, res) => {
         return res.status(401).json({message: 'Invalid username or password'});
     }
 
-    const token = jwt.sign({userId: user.id}, 'secret');
+    const token = jwt.sign({username}, 'secret');
 
     res.json({token});
 });
+
+routerAuthentication.post('/validate', authMiddleware, (req, res) => {
+    res.json({message: 'OK'})
+})

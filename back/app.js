@@ -7,6 +7,8 @@ import {CreateChatRoomUsecase} from "./chat/createChatRoom.js";
 import {SendMessageUsecase} from "./chat/sendMessage.js";
 import cors from "cors";
 import {routerAuthentication} from "./routes/authentication.js";
+import socketioJwt from 'socketio-jwt';
+import {createChatterFromToken} from "./chat/chatter.js";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -22,19 +24,24 @@ app.use('/auth', routerAuthentication);
 
 const chatRoomRepository = new InMemoryChatRoomRepository()
 
+io.use(socketioJwt.authorize({
+    secret: 'secret',
+    handshake: true,
+}));
+
 io.on('connection', (socket) => {
     const createChatRoomUsecase = new CreateChatRoomUsecase(chatRoomRepository)
     const sendMessageUsecase = new SendMessageUsecase(chatRoomRepository)
 
     function initChatRoom(roomName) {
         socket.join(roomName)
-        const chatRoom = createChatRoomUsecase.exec(roomName, {id: socket.id})
-        socket.emit('room-joined', chatRoom.messages, chatRoom.users)
+        const chatRoom = createChatRoomUsecase.exec(roomName, createChatterFromToken(socket.decoded_token))
+        socket.emit('room-joined', {messages: chatRoom.messages, users: chatRoom.users})
     }
 
     socket.on('join-room', (roomName) => {
         initChatRoom(roomName);
-        socket.broadcast.to(roomName).emit('user-connected', {id: socket.id});
+        socket.broadcast.to(roomName).emit('user-connected', createChatterFromToken(socket.decoded_token));
     })
 
     socket.on('send-message', ({roomName, message}) => {

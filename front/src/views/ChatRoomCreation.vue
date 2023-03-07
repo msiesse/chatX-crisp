@@ -11,11 +11,15 @@ import {ref} from 'vue'
 import {useRouter} from "vue-router"
 import {storeToRefs} from "pinia";
 import {useSocketStore} from "../store/socket/useSocket.js";
+import {useChatRoomStore} from "../store/useChatRoomStore.js";
 
 export default {
   setup() {
     const router = useRouter();
     const {socketClient} = storeToRefs(useSocketStore())
+    const {connect} = useSocketStore()
+    connect("http://localhost:3000")
+    useChatRoomStore()
     const roomName = ref('')
 
     const createRoom = () => {

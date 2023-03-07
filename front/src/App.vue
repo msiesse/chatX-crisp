@@ -1,8 +1,8 @@
 <script setup>
-import {useSocketStore} from "./store/socket/useSocket.js";
+import {useHttpClientStore} from "./store/useHttpClient.js";
 
-const { connect } = useSocketStore()
-connect("http://localhost:3000")
+const { initHttpClient } = useHttpClientStore()
+initHttpClient()
 </script>
 
 <template>
