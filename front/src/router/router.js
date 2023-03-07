@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router';
-import ChatRoom from '../views/ChatRoom.vue';
+import ChatLayout from '../components/ChatLayout.vue'
 import Home from "../views/ChatRoomCreation.vue";
 import Signup from "../views/Signup.vue";
 import axios from "axios";
@@ -8,7 +8,7 @@ import Login from "../views/Login.vue";
 export const createRouterInstance = () => {
     const routes = [
         {path: '/chatRoom', component: Home, meta: {requiresAuth: true}},
-        {path: '/chat/:roomName', component: ChatRoom, meta: {requiresAuth: true}},
+        {path: '/chat/:roomName', component: ChatLayout, meta: {requiresAuth: true}},
         {path: '/signup', component: Signup},
         {path: '/login', component: Login}
     ];
@@ -40,16 +40,16 @@ export const createRouterInstance = () => {
         }
     });
 
-    router.beforeEach(async(to, from, next) => {
+    router.beforeEach(async (to, from, next) => {
         const token = localStorage.getItem('token') || ''
-        if (token !== '' && (to.path === '/login' || to.path ==='/signup')) {
+        if (token !== '' && (to.path === '/login' || to.path === '/signup')) {
             next('/chatRoom')
         } else {
             next()
         }
     })
 
-    router.beforeEach(async(to, from, next) => {
+    router.beforeEach(async (to, from, next) => {
         const regex = /^\/chat\/.+$/;
         if (routes.some(route => (route.path === to.path || regex.test(to.path)))) {
             next()
