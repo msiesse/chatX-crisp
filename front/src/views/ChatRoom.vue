@@ -61,7 +61,7 @@
 <script setup>
 import {Disclosure} from "@headlessui/vue"
 import {Bars3Icon,} from '@heroicons/vue/24/outline'
-import {ref, watch} from 'vue'
+import {ref} from 'vue'
 import {useRoute} from 'vue-router'
 import {useSocketStore} from "../store/useSocketStore.js";
 import {storeToRefs} from "pinia";
