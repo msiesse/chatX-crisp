@@ -13,7 +13,6 @@
       <button type="submit">Signin</button>
     </form>
     <div v-if="error" style="color: red;">{{ error }}</div>
-    <div v-else-if="success" style="color: green;">{{ success }}</div>
   </div>
 </template>
 
@@ -28,7 +27,6 @@ export default {
     const username = ref('');
     const password = ref('');
     const error = ref('');
-    const success = ref('');
     const { signin } = useAuthStore()
     const router = useRouter()
 
@@ -46,7 +44,6 @@ export default {
       username,
       password,
       error,
-      success,
       signinUI
     };
   },

@@ -42,6 +42,7 @@ export const createRouterInstance = () => {
 
     router.beforeEach(async(to, from, next) => {
         const token = localStorage.getItem('token') || ''
+        console.log(to.path)
         if (token !== '' && (to.path === '/signin' || to.path ==='/signup')) {
             next('/chatRoom')
         } else {
@@ -50,7 +51,8 @@ export const createRouterInstance = () => {
     })
 
     router.beforeEach(async(to, from, next) => {
-        if (routes.some(route => route.path === to.path)) {
+        const regex = /^\/chat\/.*$/;
+        if (routes.some(route => (route.path === to.path || regex.test(to.path)))) {
             next()
         } else {
             next('/signup')

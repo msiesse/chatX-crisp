@@ -21,7 +21,7 @@
 <script>
 import {ref, reactive, onBeforeUnmount} from 'vue'
 import {useRoute} from 'vue-router'
-import {useSocketStore} from "../store/useSocket.js";
+import {useSocketStore} from "../store/useSocketStore.js";
 import {storeToRefs} from "pinia";
 import {useAuthStore} from "../store/useAuthStore.js";
 import {useChatRoomStore} from "../store/useChatRoomStore.js";
@@ -29,9 +29,7 @@ import {useChatRoomStore} from "../store/useChatRoomStore.js";
 export default {
   setup() {
     const route = useRoute()
-    const {connect} = useSocketStore()
     const {socketClient} = storeToRefs(useSocketStore())
-    connect("http://localhost:3000")
     const chatRoomStore = useChatRoomStore()
     const {sendMessage} = chatRoomStore
     const {users, messages} = storeToRefs(chatRoomStore)

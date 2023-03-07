@@ -1,6 +1,6 @@
 import {computed, ref} from "vue";
 import {defineStore, storeToRefs} from "pinia"
-import {useHttpClientStore} from "./useHttpClient.js";
+import {useHttpClientStore} from "./useHttpClientStore.js";
 import jwt_decode from 'jwt-decode';
 
 export const useAuthStore = defineStore('auth', () => {

@@ -1,6 +1,6 @@
 import {defineStore, storeToRefs} from "pinia";
 import {ref} from "vue";
-import {useSocketStore} from "./useSocket.js";
+import {useSocketStore} from "./useSocketStore.js";
 import {useAuthStore} from "./useAuthStore.js";
 
 export const useChatRoomStore = defineStore('chatroom', () => {
