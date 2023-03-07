@@ -27,6 +27,7 @@
           </button>
         </div>
       </form>
+      <div v-if="error" class="text-red-500"> {{ error }} </div>
     </div>
   </div>
 </template>
