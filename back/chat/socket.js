@@ -3,6 +3,7 @@ import {SendMessageUsecase} from "./sendMessage.js";
 import {createChatterFromToken} from "./chatter.js";
 import {io} from "../config/configApp.js";
 import {getChatRoomRepository} from "./dependencies/chatRoomRepository.js";
+import {validateSendMessage} from "./validator.js";
 
 
 const chatRoomRepository = getChatRoomRepository()
@@ -27,6 +28,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('send-message', ({roomName, message}) => {
+        validateSendMessage(roomName, message)
         try {
             sendMessageUsecase.exec(roomName, message)
             io.to(roomName).emit('new-message', message);
@@ -39,5 +41,3 @@ io.on('connection', (socket) => {
         console.log('User disconnected');
     });
 });
-
-export const ioChat = io
