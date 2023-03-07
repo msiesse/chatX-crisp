@@ -5,6 +5,7 @@ import {Server} from "socket.io";
 import cors from "cors";
 import {routerAuthentication} from "./authentication/routes/authentication.js";
 import socketioJwt from 'socketio-jwt';
+import "./envConfig.js"
 
 const app = express();
 export const httpServer = http.createServer(app);
@@ -19,6 +20,6 @@ app.use(bodyParser.json());
 app.use('/auth', routerAuthentication);
 
 io.use(socketioJwt.authorize({
-    secret: 'secret',
+    secret: process.env.SECRET,
     handshake: true,
 }));

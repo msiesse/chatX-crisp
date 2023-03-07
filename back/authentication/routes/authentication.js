@@ -20,7 +20,7 @@ routerAuthentication.post('/signup', (req, res) => {
     const hash = bcrypt.hashSync(password, salt);
     userRepository.save(new User(username, hash))
 
-    const token = jwt.sign({username}, 'secret');
+    const token = jwt.sign({username}, process.env.SECRET);
 
     res.json({token});
 })
@@ -33,7 +33,7 @@ routerAuthentication.post('/signin', (req, res) => {
         return res.status(401).json({message: 'Invalid username or password'});
     }
 
-    const token = jwt.sign({username}, 'secret');
+    const token = jwt.sign({username}, process.env.SECRET);
 
     res.json({token});
 });

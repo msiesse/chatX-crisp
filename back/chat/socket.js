@@ -4,6 +4,7 @@ import {createChatterFromToken} from "./chatter.js";
 import {io} from "../configApp.js";
 import {getChatRoomRepository} from "./dependencies/chatRoomRepository.js";
 
+
 const chatRoomRepository = getChatRoomRepository()
 
 io.on('connection', (socket) => {

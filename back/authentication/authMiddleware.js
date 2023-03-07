@@ -1,5 +1,6 @@
 import {getUserRepository} from "./dependencies/repositories/userRepository.js";
 import jwt from "jsonwebtoken";
+import "../envConfig.js"
 
 const userRepository = getUserRepository()
 
@@ -11,7 +12,7 @@ export const authMiddleware = (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, 'secret');
+        const decoded = jwt.verify(token, process.env.SECRET);
         const user = userRepository.find({name: decoded.username})
         if (!user) {
             return res.status(404).json({message: 'User not found'});
