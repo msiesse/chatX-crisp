@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router';
-import ChatLayout from '../components/ChatLayout.vue'
+import ChatLayout from '../views/ChatRoom.vue'
 import Home from "../views/ChatRoomCreation.vue";
 import Signup from "../views/Signup.vue";
 import axios from "axios";
