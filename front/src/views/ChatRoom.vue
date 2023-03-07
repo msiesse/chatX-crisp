@@ -33,8 +33,8 @@
 
     <main class="-mt-32">
       <div ref="chatContainer"
-           class="overflow-y-scroll flex flex-col justify-end bg-white rounded-2xl h-[32rem] max-w-5xl mx-6 pb-12 lg:mx-auto md:mx-2 sm:mx-4">
-        <div v-for="message in messages" :key="message.id" :class="getClassRecipient(message)">
+           class="overflow-y-scroll flex flex-col-reverse bg-white rounded-2xl h-[32rem] max-w-5xl mx-6 pb-12 lg:mx-auto md:mx-2 sm:mx-4">
+        <div v-for="message in messages.slice().reverse()" :key="message.id" :class="getClassRecipient(message)">
           <div v-if="message.username === username" class="flex flex-col">
             <p class="p-2 my-2 rounded-lg bg-gray-200 text-gray-800">
               {{ message.content }}
