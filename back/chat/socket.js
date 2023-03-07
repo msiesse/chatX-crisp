@@ -1,7 +1,7 @@
 import {CreateChatRoomUsecase} from "./createChatRoom.js";
 import {SendMessageUsecase} from "./sendMessage.js";
 import {createChatterFromToken} from "./chatter.js";
-import {io} from "../configApp.js";
+import {io} from "../config/configApp.js";
 import {getChatRoomRepository} from "./dependencies/chatRoomRepository.js";
 
 

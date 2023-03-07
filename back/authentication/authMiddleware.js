@@ -1,6 +1,6 @@
 import {getUserRepository} from "./dependencies/repositories/userRepository.js";
 import jwt from "jsonwebtoken";
-import "../envConfig.js"
+import "../config/envConfig.js"
 
 const userRepository = getUserRepository()
 

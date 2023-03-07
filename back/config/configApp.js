@@ -3,7 +3,7 @@ import http from 'http';
 import bodyParser from 'body-parser';
 import {Server} from "socket.io";
 import cors from "cors";
-import {routerAuthentication} from "./authentication/routes/authentication.js";
+import {routerAuthentication} from "../authentication/routes/authentication.js";
 import socketioJwt from 'socketio-jwt';
 import "./envConfig.js"
 
