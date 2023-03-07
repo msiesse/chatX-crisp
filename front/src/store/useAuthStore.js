@@ -17,7 +17,7 @@ export const useAuthStore = defineStore('auth', () => {
             password: password
         });
         localStorage.setItem('token', response.data.token);
-        httpClient.value.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+        httpClient.value.setToken(response.data.token)
         token.value = response.data.token
     }
 
@@ -28,12 +28,12 @@ export const useAuthStore = defineStore('auth', () => {
         });
         token.value = response.data.token
         localStorage.setItem('token', token.value);
-        httpClient.value.defaults.headers.common['Authorization'] = `Bearer ${token.value}`
+        httpClient.value.setToken(response.data.token)
     }
 
     const removeToken = async () => {
         localStorage.setItem('token', '')
-        httpClient.value.defaults.headers.common['Authorization'] = ''
+        httpClient.value.setToken('')
         token.value = ''
     }
 
