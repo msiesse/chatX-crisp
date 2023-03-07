@@ -16,26 +16,34 @@ routerAuthentication.post('/signup', (req, res) => {
         return res.status(400).json({message: 'Please provide a username and password'});
     }
 
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(password, salt);
-    userRepository.save(new User(username, hash))
+    try {
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(password, salt);
+        userRepository.save(new User(username, hash))
 
-    const token = jwt.sign({username}, process.env.SECRET);
+        const token = jwt.sign({username}, process.env.SECRET);
 
-    res.json({token});
+        res.json({token});
+    } catch(error) {
+        res.status(400).json(error)
+    }
 })
 
 routerAuthentication.post('/signin', (req, res) => {
-    const {username, password} = req.body;
-    const user = userRepository.find({name: username, password})
+    try {
+        const {username, password} = req.body;
+        const user = userRepository.find({name: username, password})
 
-    if (!user) {
-        return res.status(401).json({message: 'Invalid username or password'});
+        if (!user) {
+            return res.status(401).json({message: 'Invalid username or password'});
+        }
+
+        const token = jwt.sign({username}, process.env.SECRET);
+
+        res.json({token});
+    } catch (error) {
+        res.status(400).json(error)
     }
-
-    const token = jwt.sign({username}, process.env.SECRET);
-
-    res.json({token});
 });
 
 routerAuthentication.post('/validate', authMiddleware, (req, res) => {
