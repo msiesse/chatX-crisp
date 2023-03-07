@@ -28,8 +28,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('send-message', ({roomName, message}) => {
-        validateSendMessage(roomName, message)
         try {
+            validateSendMessage(roomName, message)
             sendMessageUsecase.exec(roomName, message)
             io.to(roomName).emit('new-message', message);
         } catch (error) {

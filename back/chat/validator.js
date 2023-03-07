@@ -3,7 +3,9 @@ import Joi from 'joi';
 const sendMessageSchema = Joi.object({
     roomName: Joi.string().required(),
     message: Joi.object({
+        id: Joi.number().required(),
         content: Joi.string().min(1).required(),
+        username: Joi.string().required()
     }).required(),
 });
 
