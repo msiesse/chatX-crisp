@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 import {ref} from "vue";
 import {defineStore, storeToRefs} from "pinia"
-import {useAuthStore} from "../useAuthStore.js";
+import {useAuthStore} from "./useAuthStore.js";
 
 export const useSocketStore = defineStore('socket', () => {
     const socketClient = ref(null)

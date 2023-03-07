@@ -10,7 +10,7 @@
 import {ref} from 'vue'
 import {useRouter} from "vue-router"
 import {storeToRefs} from "pinia";
-import {useSocketStore} from "../store/socket/useSocket.js";
+import {useSocketStore} from "../store/useSocket.js";
 import {useChatRoomStore} from "../store/useChatRoomStore.js";
 
 export default {

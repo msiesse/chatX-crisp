@@ -21,7 +21,7 @@
 <script>
 import {ref, reactive, onBeforeUnmount} from 'vue'
 import {useRoute} from 'vue-router'
-import {useSocketStore} from "../store/socket/useSocket.js";
+import {useSocketStore} from "../store/useSocket.js";
 import {storeToRefs} from "pinia";
 import {useAuthStore} from "../store/useAuthStore.js";
 import {useChatRoomStore} from "../store/useChatRoomStore.js";

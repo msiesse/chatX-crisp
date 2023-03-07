@@ -36,8 +36,9 @@ export default {
       try {
         await signin(username.value, password.value)
         await router.push("/chatRoom")
-      } catch (error) {
-        console.log(error)
+      } catch (e) {
+        if (e.response?.data?.message) error.value = e.response.data.message
+        else error.value = e
       }
     }
 

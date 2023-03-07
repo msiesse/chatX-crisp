@@ -12,31 +12,23 @@ export const useAuthStore = defineStore('auth', () => {
     })
 
     const signup = async (username, password) => {
-        try {
-            const response = await httpClient.value.post('/auth/signup', {
-                username: username,
-                password: password
-            });
-            localStorage.setItem('token', response.data.token);
-            httpClient.value.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-            token.value = response.data.token
-        } catch (error) {
-            console.log(error)
-        }
+        const response = await httpClient.value.post('/auth/signup', {
+            username: username,
+            password: password
+        });
+        localStorage.setItem('token', response.data.token);
+        httpClient.value.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+        token.value = response.data.token
     }
 
     const signin = async (username, password) => {
-        try {
-            const response = await httpClient.value.post('/auth/signin', {
-                username: username,
-                password: password
-            });
-            token.value = response.data.token
-            localStorage.setItem('token', token.value);
-            httpClient.value.defaults.headers.common['Authorization'] = `Bearer ${token.value}`
-        } catch (error) {
-            console.log(error)
-        }
+        const response = await httpClient.value.post('/auth/signin', {
+            username: username,
+            password: password
+        });
+        token.value = response.data.token
+        localStorage.setItem('token', token.value);
+        httpClient.value.defaults.headers.common['Authorization'] = `Bearer ${token.value}`
     }
 
     const removeToken = async () => {
