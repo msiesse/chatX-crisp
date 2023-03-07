@@ -33,18 +33,16 @@
 
     <main class="-mt-32">
       <div ref="chatContainer"
-           class="overflow-y-scroll bg-white rounded-2xl h-[32rem] max-w-5xl mx-6 pb-12 lg:mx-auto md:mx-2 sm:mx-4">
-        <div class="flex flex-col justify-end">
-          <div v-for="message in messages" :key="message.id" :class="getClassRecipient(message)">
-            <div v-if="message.username === username" class="flex flex-col">
-              <p class="p-2 my-2 rounded-lg bg-gray-200 text-gray-800">
-                {{ message.content }}
-              </p>
-            </div>
-            <div v-else class="flex flex-col items-start">
-              <p class="p-2 my-2 rounded-lg bg-blue-500 text-white shrink-0">{{ message.content }}</p>
-              <p class="text-xs self-start grow-0">{{ message.username }}</p>
-            </div>
+           class="overflow-y-scroll flex flex-col justify-end bg-white rounded-2xl h-[32rem] max-w-5xl mx-6 pb-12 lg:mx-auto md:mx-2 sm:mx-4">
+        <div v-for="message in messages" :key="message.id" :class="getClassRecipient(message)">
+          <div v-if="message.username === username" class="flex flex-col">
+            <p class="p-2 my-2 rounded-lg bg-gray-200 text-gray-800">
+              {{ message.content }}
+            </p>
+          </div>
+          <div v-else class="flex flex-col items-start">
+            <p class="p-2 my-2 rounded-lg bg-blue-500 text-white shrink-0">{{ message.content }}</p>
+            <p class="text-xs self-start grow-0">{{ message.username }}</p>
           </div>
         </div>
       </div>
