@@ -6,11 +6,12 @@
           <div class="border-b border-gray-700">
             <div class="flex h-16 items-center justify-between px-4 sm:px-0">
               <div class="flex items-center">
-                <div class="flex-shrink-0">
+                <router-link to="/" class="flex-shrink-0">
                   <img class="h-8 w-32"
                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Logo_de_Crisp.svg/1280px-Logo_de_Crisp.svg.png"
-                       alt="Crisp"/>
-                </div>
+                       alt="Crisp"
+                  />
+                </router-link>
               </div>
               <button type="button"
                       class="-mr-3 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900"
@@ -40,9 +41,9 @@
                 {{ message.content }}
               </p>
             </div>
-            <div v-else class="flex flex-col">
-              <p class="p-2 my-2 rounded-lg bg-blue-500 text-white">{{ message.content }}</p>
-              <p class="text-xs self-start">{{ message.username }}</p>
+            <div v-else class="flex flex-col items-start">
+              <p class="p-2 my-2 rounded-lg bg-blue-500 text-white shrink-0">{{ message.content }}</p>
+              <p class="text-xs self-start grow-0">{{ message.username }}</p>
             </div>
           </div>
         </div>
