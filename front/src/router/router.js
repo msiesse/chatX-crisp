@@ -10,7 +10,8 @@ export const createRouterInstance = () => {
         {path: '/chatRoom', component: Home, meta: {requiresAuth: true}},
         {path: '/chat/:roomName', component: ChatLayout, meta: {requiresAuth: true}},
         {path: '/signup', component: Signup},
-        {path: '/login', component: Login}
+        {path: '/login', component: Login},
+        { path: '*', redirect: '/' }
     ];
 
     const router = createRouter({
