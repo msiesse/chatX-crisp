@@ -16,6 +16,11 @@ routerAuthentication.post('/signup', (req, res) => {
         return res.status(400).json({message: 'Please provide a username and password'});
     }
 
+    const user = userRepository.find({name: username})
+    if (user) {
+        return res.status(422).json({message: 'This username is already taken'})
+    }
+
     try {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);
