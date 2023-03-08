@@ -98,8 +98,8 @@ const sendMessageView = () => {
 
 const getClassRecipient = (message) => {
   if (message.username !== username) {
-    return "mx-4 self-start"
+    return "mx-4 max-w-full self-start"
   }
-  return "mx-4 self-end"
+  return "mx-4 max-w-full self-end"
 }
 </script>

@@ -18,7 +18,7 @@ export const createRouterInstance = () => {
         routes,
     })
 
-    axios.defaults.baseURL = 'http://localhost:3000/';
+    axios.defaults.baseURL = import.meta.env.PROD ? "https://chatx-crisp.ew.r.appspot.com" : 'http://localhost:3000/';
 
     router.beforeEach(async (to, from, next) => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}` || ''
