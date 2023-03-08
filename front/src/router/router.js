@@ -11,7 +11,6 @@ export const createRouterInstance = () => {
         {path: '/chat/:roomName', component: ChatLayout, meta: {requiresAuth: true}},
         {path: '/signup', component: Signup},
         {path: '/login', component: Login},
-        { path: '*', redirect: '/' }
     ];
 
     const router = createRouter({
